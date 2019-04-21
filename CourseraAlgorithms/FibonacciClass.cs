@@ -26,7 +26,19 @@ namespace CourseraAlgorithms
             Console.WriteLine($"PisanoPeriod = {GetPisanoPeriod(m)}");
             Console.WriteLine($"FibinacciNumberAgain({n_new},{m}) = {FibinacciNumberAgain(n_new, m)}");
 
-            
+            n_new = 1000000000000000;
+            m = 10;
+            Console.WriteLine($"PisanoPeriod = {GetPisanoPeriod(m)}");
+            Console.WriteLine($"LastDigitSumFibonacci({n_new},{m}) = {LastDigitSumFibonacci(n_new, m)}");
+
+
+            a = 1;
+            b = 200;
+            m = 10;
+            Console.WriteLine($"LastDigitSumFibonacciAgain({a},{b},{m}) = {LastDigitSumFibonacciAgain(a, b, m)}");
+
+
+
 
             Console.ReadKey();
         }
@@ -111,7 +123,7 @@ namespace CourseraAlgorithms
             {
                 period.Add(current);
                 temp = current;
-                current = next % m;
+                current = next;
                 next = (current + temp) % m;
             }
 
@@ -148,6 +160,62 @@ namespace CourseraAlgorithms
                 return F[equal];
             }
 
+        }
+
+        static int GetSumFibonacci(long n, int m)
+        {
+            int current = 0, next = 1;
+            int sum = 0;
+            int temp = current;
+            current = next;
+            next += temp;
+            sum += current;
+
+            if (n < 1)
+                return 0;
+
+
+            for (int i = 2; i <= n; i++)
+            {
+                temp = current;
+                current = next;
+                next = (current + temp) % m;
+                sum = (sum + current) % m;
+            }
+            return sum;
+        }
+        static int LastDigitSumFibonacci(long n, int m)
+        {
+            long sum = 0;
+            int period = GetPisanoPeriod(m);
+            if (n <= period)
+                sum = GetSumFibonacci(n, m);
+            else
+            {
+                sum = GetSumFibonacci(period, m);
+                long new_n = n % period;
+                sum = sum * (n / period) + GetSumFibonacci(new_n, m);
+            }
+
+            return (int)sum;
+        }
+
+
+        static int LastDigitSumFibonacciAgain(long a, long b, int m)
+        {
+            int current = FibonacciLastDigit(a, m), next = FibonacciLastDigit(a + 1, m);
+            int sum = current;
+            int temp = 0;
+
+
+            for (long i = a + 1; i <= b; i++)
+            {
+                temp = current;
+                current = next;
+                next = (current + temp) % m;
+                sum = (sum + current) % m;
+            }
+            return sum;
         }
 
     }
