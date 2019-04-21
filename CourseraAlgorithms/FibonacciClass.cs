@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseraAlgorithms
 {
@@ -10,7 +12,7 @@ namespace CourseraAlgorithms
             int n = 30;
             Console.WriteLine($"FibonacciRecursion({n}) = {FibonacciRecursion(n)}");
             n = 327305;
-            Console.WriteLine($"FibonacciLastDigit({n}) = {FibonacciLastDigit(n)}");
+            Console.WriteLine($"FibonacciLastDigit({n}) = {FibonacciLastDigit(n, 10)}");
 
             long a = 28851538, b = 1183019;
             Console.WriteLine($"GCD({a},{b}) = {GCD(a, b)}");
@@ -21,6 +23,8 @@ namespace CourseraAlgorithms
 
             long n_new = 2816213588, m = 239;
             Console.WriteLine($"FibinacciNumberAgain({n_new},{m}) = {FibinacciNumberAgain(n_new, m)}");
+
+            Console.WriteLine($"PisanoPeriod = {GetPisanoPeriod(10)}");
 
             Console.ReadKey();
         }
@@ -42,18 +46,18 @@ namespace CourseraAlgorithms
         /// </summary>
         /// <param name="n">n от 0 до 10^7</param>
         /// <returns></returns>
-        static int FibonacciLastDigit(int n)
+        static int FibonacciLastDigit(long n, int m)
         {
             int[] F = new int[n + 1];
             if (n <= 1)
-                return n;
+                return (int)n;
             else
             {
                 F[0] = 0;
                 F[1] = 1;
                 for (int i = 2; i <= n; i++)
                 {
-                    F[i] = (F[i - 1] + F[i - 2]) % 10;
+                    F[i] = (F[i - 1] + F[i - 2]) % m;
                 }
                 return F[n];
             }
@@ -86,6 +90,35 @@ namespace CourseraAlgorithms
         {
             long gcd = GCD(a, b);
             return a * b / gcd;
+        }
+
+        static int GetPisanoPeriod(int m)
+        {
+            int current = 0, next = 1;
+            List<int> period = new List<int>();
+
+            if (m < 2)
+                return period.Count();
+
+            period.Add(current);
+            int temp = current;
+            current = next;
+            next += temp;
+
+            while (current != 0 || next != 1)
+            {
+                period.Add(current);
+                temp = current;
+                current = next % m;
+                next = (current + temp) % m;
+            }
+
+            foreach(int num in period)
+            {
+                Console.Write($"{num} ");
+            }
+
+            return period.Count();
         }
 
         /// <summary>
