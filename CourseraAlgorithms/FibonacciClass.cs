@@ -37,7 +37,8 @@ namespace CourseraAlgorithms
             m = 10;
             Console.WriteLine($"LastDigitSumFibonacciAgain({a},{b},{m}) = {LastDigitSumFibonacciAgain(a, b, m)}");
 
-
+            n_new=1234567890;
+            Console.WriteLine($"LastDigitSumOfSquareFibonacci({n_new}) = {LastDigitSumOfSquareFibonacci(n_new)}");
 
 
             Console.ReadKey();
@@ -217,6 +218,49 @@ namespace CourseraAlgorithms
             }
             return sum;
         }
+
+        static int LastDigitSumOfSquareFibonacci(long n)
+        {
+            int m = 10;
+            long sum = 0;
+            int period = GetPisanoPeriod(m);
+            if (n <= period)
+                sum = GetSumOfSquareFibonacci(n);
+            else
+            {
+                sum = GetSumOfSquareFibonacci(period);
+                long new_n = n % period;
+                sum = sum * (n / period) + GetSumOfSquareFibonacci(new_n);
+            }
+
+            return (int)sum;
+        }
+
+        static int GetSumOfSquareFibonacci(long n)
+        {
+            int m = 10;
+            int current = 0, next = 1;
+            int sum = 0;
+            int temp = current;
+            current = next;
+            next += temp;
+            sum += current;
+
+            if (n < 1)
+                return 0;
+
+
+            for (int i = 2; i <= n; i++)
+            {
+                temp = current;
+                current = next;
+                next = (current + temp)%m;
+                sum = (sum + current*current) % m;
+            }
+            return sum;
+        }
+
+
 
     }
 }
