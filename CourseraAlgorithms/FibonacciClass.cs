@@ -21,10 +21,12 @@ namespace CourseraAlgorithms
             b = 1183019;
             Console.WriteLine($"LCM({a},{b}) = {LCM(a, b)}");
 
-            long n_new = 2816213588, m = 239;
+            long n_new = 239;
+            int m = 1000;
+            Console.WriteLine($"PisanoPeriod = {GetPisanoPeriod(m)}");
             Console.WriteLine($"FibinacciNumberAgain({n_new},{m}) = {FibinacciNumberAgain(n_new, m)}");
 
-            Console.WriteLine($"PisanoPeriod = {GetPisanoPeriod(10)}");
+            
 
             Console.ReadKey();
         }
@@ -113,10 +115,10 @@ namespace CourseraAlgorithms
                 next = (current + temp) % m;
             }
 
-            foreach(int num in period)
-            {
-                Console.Write($"{num} ");
-            }
+            //foreach(int num in period)
+            //{
+            //    Console.Write($"{num} ");
+            //}
 
             return period.Count();
         }
@@ -127,9 +129,9 @@ namespace CourseraAlgorithms
         /// <param name="n"></param>
         /// <param name="m"></param>
         /// <returns></returns>
-        static long FibinacciNumberAgain(long n, long m)
+        static long FibinacciNumberAgain(long n, int m)
         {
-            long period = (long)Math.Pow(m, 2) - 1;
+            int period = GetPisanoPeriod(m);
             long equal = n % period;
 
             long[] F = new long[equal + 1];
